@@ -2,6 +2,9 @@ package rva.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -24,7 +27,8 @@ public class Nacionalnost implements Serializable {
 	private String skracenica;
 
 	//bi-directional many-to-one association to Igrac
-	@OneToMany(mappedBy="nacionalnost")
+	@JsonIgnore
+	@OneToMany(mappedBy="nacionalnost", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
 	private List<Igrac> igracs;
 
 	public Nacionalnost() {

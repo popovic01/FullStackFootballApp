@@ -2,6 +2,9 @@ package rva.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -24,7 +27,9 @@ public class Liga implements Serializable {
 	private String oznaka;
 
 	//bi-directional many-to-one association to Tim
-	@OneToMany(mappedBy="liga")
+	@JsonIgnore
+	//omogucavanje kaskadnog brisanja na nivou backenda
+	@OneToMany(mappedBy="liga", cascade = {CascadeType.DETACH, CascadeType.REMOVE})
 	private List<Tim> tims;
 
 	public Liga() {
