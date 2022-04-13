@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import rva.jpa.Igrac;
 import rva.repositories.IgracRepository;
 
 //repository komunicira sa bazom, a controller sa repository-jem
 //ova anotacija koristi se samo na nivou klase i koristi se za definisanje RESTful veb servisa
 @RestController
+@Api(tags = {"Igrac CRUD operacije"})
 public class IgracRestController {
 	
 	//depency injection se vrsi na 3 nacina:
@@ -36,6 +39,7 @@ public class IgracRestController {
 	
 	//metoda koja vraca sve igrace
 	@GetMapping("igrac")
+	@ApiOperation(value = "Vraća kolekciju svih igrača iz baze podataka")
 	public Collection<Igrac> getIgrac() {
 		return igracRepository.findAll();
 	}
@@ -44,12 +48,14 @@ public class IgracRestController {
 	//naziv od path variable mora da bude isti kao i uri parametar
 	//ono sto prosledimo kao kao uri parametar, mapira se na parametar metode - integer id
 	@GetMapping("igrac/{id}")
+	@ApiOperation(value = "Vraća igrača iz baze podataka po prosleđenom id-ju")
 	public Igrac getIgrac(@PathVariable("id") Integer id) {
 		return igracRepository.getById(id);
 	}
 	
 	//getovanje igraca na osnovu imena
 	@GetMapping("igracIme/{ime}")
+	@ApiOperation(value = "Vraća kolekciju igrača iz baze podataka po prosleđenom imenu")
 	public Collection<Igrac> getIgracByIme(@PathVariable("ime") String ime) {
 		return igracRepository.findByImeContainingIgnoreCase(ime);
 	}
@@ -57,6 +63,7 @@ public class IgracRestController {
 	//dodavanje igraca
 	//iz zahteva preuzimamo vrednost igraca koji zelimo da insertujemo - @RequestBody
 	@PostMapping("igrac")
+	@ApiOperation(value = "Dodaje igrača u bazu podataka")
 	public ResponseEntity<Igrac> insertIgrac(@RequestBody Igrac igrac) {
 		//provera da li ima postojeceg igraca u bazi
 		if (!igracRepository.existsById(igrac.getId())) {
@@ -71,6 +78,7 @@ public class IgracRestController {
 	//update igraca
 	//iz zahteva preuzimamo vrednost igraca koji zelimo da updateujemo - @RequestBody
 	@PutMapping("igrac")
+	@ApiOperation(value = "Modifikuje postojećeg igrača iz baze podataka")
 	public ResponseEntity<Igrac> updateIgrac(@RequestBody Igrac igrac) {
 		//provera da li ima postojeceg igraca u bazi - jedino tad moze update
 		//id je -100 jer uvek hocemo testni podatak da modifikujemo
@@ -85,6 +93,7 @@ public class IgracRestController {
 	
 	//brisanje igraca po id-iju
 	@DeleteMapping("igrac/{id}")
+	@ApiOperation(value = "Briše igrača iz baze podataka po prosleđenom id-ju")
 	public ResponseEntity<Igrac> deleteIgrac(@PathVariable("id") Integer id) {
 		//provera da li ima postojeceg igraca u bazi - jedino tad moze brisanje
 		if (igracRepository.existsById(id)) {

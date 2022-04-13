@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import rva.jpa.Igrac;
 import rva.jpa.Liga;
 import rva.repositories.LigaRepository;
 
 @RestController
+@Api(tags = {"Liga CRUD operacije"})
 public class LigaRestController {
 	
 	@Autowired
@@ -29,21 +32,25 @@ public class LigaRestController {
 	
 	//metoda koja vraca sve igrace
 	@GetMapping("liga")
+	@ApiOperation(value = "Vraća kolekciju svih liga iz baze podataka")
 	public Collection<Liga> getLiga() {
 		return ligaRepository.findAll();
 	}
 	
 	@GetMapping("liga/{id}")
+	@ApiOperation(value = "Vraća ligu iz baze podataka po prosleđenom id-ju")
 	public Liga getLiga(@PathVariable("id") Integer id) {
 		return ligaRepository.getById(id);
 	}
 	
 	@GetMapping("ligaNaziv/{naziv}")
+	@ApiOperation(value = "Vraća kolekciju liga iz baze podataka po prosleđenom nazivu")
 	public Collection<Liga> getLigaByNaziv(@PathVariable("naziv") String naziv) {
 		return ligaRepository.findByNazivContainingIgnoreCase(naziv);
 	}
 	
 	@PostMapping("liga")
+	@ApiOperation(value = "Dodaje ligu u bazu podataka")
 	public ResponseEntity<Liga> insertLiga(@RequestBody Liga liga) {
 		if (!ligaRepository.existsById(liga.getId())) {
 			ligaRepository.save(liga);
@@ -53,6 +60,7 @@ public class LigaRestController {
 	}
 	
 	@PutMapping("liga")
+	@ApiOperation(value = "Modifikuje postojeću ligu iz baze podataka")
 	public ResponseEntity<Liga> updateLiga(@RequestBody Liga liga) {
 		if (ligaRepository.existsById(liga.getId())) {
 			ligaRepository.save(liga);
@@ -62,6 +70,7 @@ public class LigaRestController {
 	}
 	
 	@DeleteMapping("liga/{id}")
+	@ApiOperation(value = "Briše ligu iz baze podataka po prosleđenom id-ju")
 	public ResponseEntity<Liga> deleteLiga(@PathVariable("id") Integer id) {
 		if (ligaRepository.existsById(id)) {
 			ligaRepository.deleteById(id);
