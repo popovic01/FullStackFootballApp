@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import io.swagger.annotations.ApiOperation;
 import rva.jpa.Igrac;
 import rva.repositories.IgracRepository;
 
+//da bi sa frontenda mogli da "gadjamo" endpointe koje smo definisali
+@CrossOrigin
 //repository komunicira sa bazom, a controller sa repository-jem
 //ova anotacija koristi se samo na nivou klase i koristi se za definisanje RESTful veb servisa
 @RestController
