@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import rva.jpa.Igrac;
+import rva.jpa.Tim;
 import rva.repositories.IgracRepository;
+import rva.repositories.TimRepository;
 
 //da bi sa frontenda mogli da "gadjamo" endpointe koje smo definisali
 @CrossOrigin
@@ -35,6 +37,9 @@ public class IgracRestController {
 	
 	@Autowired //korisitmo repository interfejs pomocu dependency injection jer ne mozemo da instanciramo interfejs
 	private IgracRepository igracRepository;
+	
+	@Autowired 
+	private TimRepository timRepository;
 	
 	//da bismo mogli da izvrsimo sql upit nad bazom podataka
 	@Autowired
@@ -56,11 +61,12 @@ public class IgracRestController {
 		return igracRepository.getById(id);
 	}
 	
-	//getovanje igraca na osnovu imena
-	@GetMapping("igracIme/{ime}")
-	@ApiOperation(value = "Vraća kolekciju igrača iz baze podataka po prosleđenom imenu")
-	public Collection<Igrac> getIgracByIme(@PathVariable("ime") String ime) {
-		return igracRepository.findByImeContainingIgnoreCase(ime);
+	//getovanje igraca na osnovu tima
+	@GetMapping("igracTim/{idTima}")
+	@ApiOperation(value = "Vraća kolekciju igrača iz baze podataka po prosleđenom ID tima")
+	public Collection<Igrac> getIgracByTim(@PathVariable("idTima") Integer idTim) {
+		Tim t = timRepository.getOne(idTim);
+		return igracRepository.findByTim(t);
 	}
 	
 	//dodavanje igraca
@@ -105,7 +111,7 @@ public class IgracRestController {
 			//ako obrisemo testni podatak, zelimo da se on ponovo doda u bazu
 			if (id == -100) {
 				jdbcTemplate.execute("INSERT INTO IGRAC (ID, IME, PREZIME, BROJ_REG, DATUM_RODJENJA, NACIONALNOST, TIM)"
-						+ " VALUES(-100, 'Test', 'Test', '123456', to_date('10.10.1990.', 'dd.mm.yyyy.'), 1, 1)");
+						+ " VALUES(-100, 'Test', 'Test', '123456', to_date('10.10.1990.', 'dd.mm.yyyy.'), 1, -100)");
 			}
 			return new ResponseEntity<Igrac>(HttpStatus.OK);
 		}
