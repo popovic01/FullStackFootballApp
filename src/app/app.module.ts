@@ -18,6 +18,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { AboutComponent } from './components/core/about/about.component';
 import { AuthorComponent } from './components/core/author/author.component';
 import { HomeComponent } from './components/core/home/home.component';
@@ -26,6 +32,9 @@ import { TimComponent } from './components/tim/tim.component';
 import { IgracComponent } from './components/igrac/igrac.component';
 import { LigaComponent } from './components/liga/liga.component';
 import { LigaDialogComponent } from './components/dialogs/liga-dialog/liga-dialog.component';
+import { TimDialogComponent } from './components/dialogs/tim-dialog/tim-dialog.component';
+import { IgracDialogComponent } from './components/dialogs/igrac-dialog/igrac-dialog.component';
+import { NacionalnostDialogComponent } from './components/dialogs/nacionalnost-dialog/nacionalnost-dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +46,10 @@ import { LigaDialogComponent } from './components/dialogs/liga-dialog/liga-dialo
     TimComponent,
     IgracComponent,
     LigaComponent,
-    LigaDialogComponent
+    LigaDialogComponent,
+    TimDialogComponent,
+    IgracDialogComponent,
+    NacionalnostDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +68,13 @@ import { LigaDialogComponent } from './components/dialogs/liga-dialog/liga-dialo
     MatDialogModule,
     MatFormFieldModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatSortModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

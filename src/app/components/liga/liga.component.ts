@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Liga } from 'src/app/models/liga';
@@ -17,6 +19,8 @@ export class LigaComponent implements OnInit, OnDestroy {
   displayedColumns = ['id', 'naziv', 'oznaka', 'actions'];
   dataSource!: MatTableDataSource<Liga>;
   subscription!: Subscription;
+  @ViewChild(MatSort, {static: false}) sort!: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator!: MatPaginator;
 
   constructor(private ligaService: LigaService, public dialog: MatDialog) { }
 
@@ -30,6 +34,8 @@ export class LigaComponent implements OnInit, OnDestroy {
     this.subscription = this.ligaService.getAllLigas().subscribe(data => {
       //punimo dataSource podacima koje vraca servis
       this.dataSource = new MatTableDataSource(data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     },
     (error: Error) => {
       console.log(error.name + ' ' + error.message);
@@ -46,6 +52,15 @@ export class LigaComponent implements OnInit, OnDestroy {
       if (result == 1)
         this.loadData();
     })
+  }
+
+  applyFilter(filterValue: any) {
+    filterValue = filterValue.target.value;
+    //ako ima viska razmaka
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLocaleLowerCase();
+    //ugradjen property filter, kao i sort i paginator
+    this.dataSource.filter = filterValue;
   }
 
   ngOnDestroy(): void {

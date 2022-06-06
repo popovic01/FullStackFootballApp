@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { LigaService } from 'src/app/services/liga.service';
   templateUrl: './liga-dialog.component.html',
   styleUrls: ['./liga-dialog.component.css']
 })
-export class LigaDialogComponent implements OnInit {
+export class LigaDialogComponent implements OnInit, OnDestroy {
 
   //oznaka za operaciju o kojoj se radi - 1: insert, 2: update, 3: delete
   public flag!: number;
@@ -49,6 +49,10 @@ export class LigaDialogComponent implements OnInit {
   public cancel(): void {
     this.dialogRef.close();
     this.snackBar.open('Odustali ste od izmene!', 'Zatvori', {duration:1000});
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }
