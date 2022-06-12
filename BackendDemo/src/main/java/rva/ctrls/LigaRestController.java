@@ -33,7 +33,7 @@ public class LigaRestController {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	//metoda koja vraca sve igrace
+	//metoda koja vraca sve lige
 	@GetMapping("liga")
 	@ApiOperation(value = "Vraća kolekciju svih liga iz baze podataka")
 	public Collection<Liga> getLiga() {

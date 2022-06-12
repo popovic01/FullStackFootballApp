@@ -54,7 +54,7 @@ public class IgracRestController {
 	
 	//metoda koja vraca jednog igraca po id-ju
 	//naziv od path variable mora da bude isti kao i uri parametar
-	//ono sto prosledimo kao kao uri parametar, mapira se na parametar metode - integer id
+	//o 
 	@GetMapping("igrac/{id}")
 	@ApiOperation(value = "Vraća igrača iz baze podataka po prosleđenom id-ju")
 	public Igrac getIgrac(@PathVariable("id") Integer id) {
@@ -90,7 +90,6 @@ public class IgracRestController {
 	@ApiOperation(value = "Modifikuje postojećeg igrača iz baze podataka")
 	public ResponseEntity<Igrac> updateIgrac(@RequestBody Igrac igrac) {
 		//provera da li ima postojeceg igraca u bazi - jedino tad moze update
-		//id je -100 jer uvek hocemo testni podatak da modifikujemo
 		if (igracRepository.existsById(igrac.getId())) {
 			//metoda save u ovom slucaju update-uje igraca
 			igracRepository.save(igrac);

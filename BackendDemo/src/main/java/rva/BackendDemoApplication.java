@@ -3,7 +3,7 @@ package rva;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//ova anotacija se uvek postavlja za klasu koja je zadužena za pokretanje projekta
+//ova anotacija se uvek postavlja za klasu koja je zaduzena za pokretanje projekta
 @SpringBootApplication
 public class BackendDemoApplication {
 
