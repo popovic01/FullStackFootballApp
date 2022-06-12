@@ -32,4 +32,4 @@ https://rvait18.herokuapp.com/
 
 ## Frontend - deployment
 
-
+https://spontaneous-boba-cd8daa.netlify.app/home
